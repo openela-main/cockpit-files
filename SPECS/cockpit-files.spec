@@ -1,5 +1,5 @@
 Name: cockpit-files
-Version: 6
+Version: 16
 Release: 1%{?dist}
 Summary: A filesystem browser for Cockpit
 License: LGPL-2.1-or-later
@@ -19,29 +19,32 @@ BuildRequires: gettext
 
 Requires: cockpit-bridge >= 318
 
-Provides: bundled(npm(@patternfly/patternfly)) = 5.3.1
-Provides: bundled(npm(@patternfly/react-core)) = 5.3.4
-Provides: bundled(npm(@patternfly/react-icons)) = 5.3.2
-Provides: bundled(npm(@patternfly/react-styles)) = 5.3.1
-Provides: bundled(npm(@patternfly/react-table)) = 5.3.4
-Provides: bundled(npm(@patternfly/react-tokens)) = 5.3.1
-Provides: bundled(npm(attr-accept)) = 2.2.2
+# Replace the older cockpit-navigator provided by 45Drives
+Obsoletes: cockpit-navigator < 0.5.11
+
+Provides: bundled(npm(@patternfly/patternfly)) = 5.4.2
+Provides: bundled(npm(@patternfly/react-core)) = 5.4.12
+Provides: bundled(npm(@patternfly/react-icons)) = 5.4.2
+Provides: bundled(npm(@patternfly/react-styles)) = 5.4.1
+Provides: bundled(npm(@patternfly/react-table)) = 5.4.14
+Provides: bundled(npm(@patternfly/react-tokens)) = 5.4.1
+Provides: bundled(npm(attr-accept)) = 2.2.5
 Provides: bundled(npm(dequal)) = 2.0.3
-Provides: bundled(npm(file-selector)) = 0.6.0
-Provides: bundled(npm(focus-trap)) = 7.5.2
+Provides: bundled(npm(file-selector)) = 2.1.2
+Provides: bundled(npm(focus-trap)) = 7.6.2
 Provides: bundled(npm(js-tokens)) = 4.0.0
 Provides: bundled(npm(lodash)) = 4.17.21
 Provides: bundled(npm(loose-envify)) = 1.4.0
 Provides: bundled(npm(object-assign)) = 4.1.1
 Provides: bundled(npm(prop-types)) = 15.8.1
 Provides: bundled(npm(react-dom)) = 18.3.1
-Provides: bundled(npm(react-dropzone)) = 14.2.3
+Provides: bundled(npm(react-dropzone)) = 14.3.5
 Provides: bundled(npm(react-is)) = 16.13.1
 Provides: bundled(npm(react)) = 18.3.1
 Provides: bundled(npm(scheduler)) = 0.23.2
 Provides: bundled(npm(tabbable)) = 6.2.0
-Provides: bundled(npm(throttle-debounce)) = 5.0.0
-Provides: bundled(npm(tslib)) = 2.6.3
+Provides: bundled(npm(throttle-debounce)) = 5.0.2
+Provides: bundled(npm(tslib)) = 2.8.1
 
 %description
 A filesystem browser for Cockpit
@@ -66,11 +69,47 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*
 
 %files
 %doc README.md
-%license LICENSE dist/index.js.LEGAL.txt dist/index.css.LEGAL.txt
+%license LICENSE dist/index.js.LEGAL.txt
 %{_datadir}/cockpit/*
 %{_datadir}/metainfo/*
 
 %changelog
+* Thu Feb 13 2025 Packit <hello@packit.dev> - 16-1
+- support copy&pasting with administrator privileges
+
+* Wed Jan 29 2025 Packit <hello@packit.dev> - 15-1
+- Show user and group information in the footer
+
+* Thu Jan 16 2025 Fedora Release Engineering <releng@fedoraproject.org> - 14-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_42_Mass_Rebuild
+
+* Wed Dec 18 2024 Packit <hello@packit.dev> - 14-1
+- Allow editing multiple file permissions
+- Support uploading files with administrator privileges
+- Add drag 'n drop support
+
+* Wed Dec 4 2024 Packit <hello@packit.dev> - 13-1
+- Translation updates
+
+* Wed Nov 20 2024 Packit <hello@packit.dev> - 12-1
+- File creation support
+
+* Wed Nov 6 2024 Packit <hello@packit.dev> - 11-1
+- Show SELinux security context in permissions dialog
+- Support changing permissions of enclosed files
+
+* Wed Oct 23 2024 Packit <hello@packit.dev> - 10-1
+- Redesign the permissions dialog
+
+* Wed Oct 9 2024 Packit <hello@packit.dev> - 9-1
+-  basic keyboard shortcuts
+
+* Wed Sep 25 2024 Packit <hello@packit.dev> - 8-1
+- Move global menu to the toolbar
+
+* Wed Sep 4 2024 Packit <hello@packit.dev> - 7-1
+- Basic file editor and viewer
+
 * Thu Aug 22 2024 Packit <hello@packit.dev> - 6-1
 - Add owner column to details view
 - Translation updates
