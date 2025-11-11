@@ -1,13 +1,11 @@
 Name: cockpit-files
-Version: 16
+Version: 24
 Release: 1%{?dist}
 Summary: A filesystem browser for Cockpit
 License: LGPL-2.1-or-later
 
 Source0: https://github.com/cockpit-project/cockpit-files/releases/download/%{version}/%{name}-%{version}.tar.xz
 BuildArch: noarch
-ExclusiveArch: %{nodejs_arches} noarch
-BuildRequires: nodejs
 BuildRequires: make
 %if 0%{?suse_version}
 # Suse's package has a different name
@@ -22,23 +20,25 @@ Requires: cockpit-bridge >= 318
 # Replace the older cockpit-navigator provided by 45Drives
 Obsoletes: cockpit-navigator < 0.5.11
 
-Provides: bundled(npm(@patternfly/patternfly)) = 5.4.2
-Provides: bundled(npm(@patternfly/react-core)) = 5.4.12
-Provides: bundled(npm(@patternfly/react-icons)) = 5.4.2
-Provides: bundled(npm(@patternfly/react-styles)) = 5.4.1
-Provides: bundled(npm(@patternfly/react-table)) = 5.4.14
-Provides: bundled(npm(@patternfly/react-tokens)) = 5.4.1
+Provides: bundled(npm(@patternfly/patternfly)) = 6.2.3
+Provides: bundled(npm(@patternfly/react-core)) = 6.2.2
+Provides: bundled(npm(@patternfly/react-icons)) = 6.2.2
+Provides: bundled(npm(@patternfly/react-styles)) = 6.2.2
+Provides: bundled(npm(@patternfly/react-table)) = 6.2.2
+Provides: bundled(npm(@patternfly/react-tokens)) = 6.2.2
 Provides: bundled(npm(attr-accept)) = 2.2.5
 Provides: bundled(npm(dequal)) = 2.0.3
 Provides: bundled(npm(file-selector)) = 2.1.2
-Provides: bundled(npm(focus-trap)) = 7.6.2
+Provides: bundled(npm(focus-trap)) = 7.6.4
 Provides: bundled(npm(js-tokens)) = 4.0.0
+Provides: bundled(npm(language-map)) = 1.5.0
 Provides: bundled(npm(lodash)) = 4.17.21
 Provides: bundled(npm(loose-envify)) = 1.4.0
+Provides: bundled(npm(mime-db)) = 1.54.0
 Provides: bundled(npm(object-assign)) = 4.1.1
 Provides: bundled(npm(prop-types)) = 15.8.1
 Provides: bundled(npm(react-dom)) = 18.3.1
-Provides: bundled(npm(react-dropzone)) = 14.3.5
+Provides: bundled(npm(react-dropzone)) = 14.3.8
 Provides: bundled(npm(react-is)) = 16.13.1
 Provides: bundled(npm(react)) = 18.3.1
 Provides: bundled(npm(scheduler)) = 0.23.2
@@ -74,6 +74,33 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*
 %{_datadir}/metainfo/*
 
 %changelog
+* Wed Jul 9 2025 Packit <hello@packit.dev> - 24-1
+- Bug fixes and translation updates
+
+* Wed Jun 25 2025 Packit <hello@packit.dev> - 23-1
+- Bug fixes and translation updates
+
+* Wed Jun 4 2025 Packit <hello@packit.dev> - 22-1
+- Bug fixes and translation updates
+
+* Wed May 21 2025 Packit <hello@packit.dev> - 21-1
+- Bug fixes and translation updates
+
+* Wed May 7 2025 Packit <hello@packit.dev> - 20-1
+- Translation updates
+- Bug fixes
+
+* Wed Apr 23 2025 Packit <hello@packit.dev> - 19-1
+- Upgraded to Patternfly 6
+- Symbolic links
+
+* Wed Mar 12 2025 Packit <hello@packit.dev> - 18-1
+- Translation updates
+- Bug fixes
+
+* Thu Feb 27 2025 Packit <hello@packit.dev> - 17-1
+- MacOS keyboard shortcuts
+
 * Thu Feb 13 2025 Packit <hello@packit.dev> - 16-1
 - support copy&pasting with administrator privileges
 
