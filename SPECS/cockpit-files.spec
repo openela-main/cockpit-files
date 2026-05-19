@@ -1,10 +1,17 @@
 Name: cockpit-files
-Version: 24
+Version: 36
 Release: 1%{?dist}
 Summary: A filesystem browser for Cockpit
 License: LGPL-2.1-or-later
 
-Source0: https://github.com/cockpit-project/cockpit-files/releases/download/%{version}/%{name}-%{version}.tar.xz
+# distributions which ship nodejs-esbuild can rebuild the bundle during package build
+%if 0%{?fedora} >= 42
+%define rebuild_bundle 1
+%endif
+
+Source0: https://github.com/cockpit-project/%{name}/releases/download/%{version}/%{name}-%{version}.tar.xz
+Source1: https://github.com/cockpit-project/%{name}/releases/download/%{version}/%{name}-node-%{version}.tar.xz
+
 BuildArch: noarch
 BuildRequires: make
 %if 0%{?suse_version}
@@ -14,35 +21,30 @@ BuildRequires:  appstream-glib
 BuildRequires:  libappstream-glib
 %endif
 BuildRequires: gettext
+%if %{defined rebuild_bundle}
+BuildRequires: /usr/bin/node
+BuildRequires: nodejs-esbuild
+%endif
 
 Requires: cockpit-bridge >= 318
 
 # Replace the older cockpit-navigator provided by 45Drives
 Obsoletes: cockpit-navigator < 0.5.11
 
-Provides: bundled(npm(@patternfly/patternfly)) = 6.2.3
-Provides: bundled(npm(@patternfly/react-core)) = 6.2.2
-Provides: bundled(npm(@patternfly/react-icons)) = 6.2.2
-Provides: bundled(npm(@patternfly/react-styles)) = 6.2.2
-Provides: bundled(npm(@patternfly/react-table)) = 6.2.2
-Provides: bundled(npm(@patternfly/react-tokens)) = 6.2.2
-Provides: bundled(npm(attr-accept)) = 2.2.5
+Provides: bundled(npm(@patternfly/patternfly)) = 6.4.0
+Provides: bundled(npm(@patternfly/react-core)) = 6.4.1
+Provides: bundled(npm(@patternfly/react-icons)) = 6.4.0
+Provides: bundled(npm(@patternfly/react-styles)) = 6.4.0
+Provides: bundled(npm(@patternfly/react-table)) = 6.4.1
+Provides: bundled(npm(@patternfly/react-tokens)) = 6.4.0
 Provides: bundled(npm(dequal)) = 2.0.3
-Provides: bundled(npm(file-selector)) = 2.1.2
 Provides: bundled(npm(focus-trap)) = 7.6.4
-Provides: bundled(npm(js-tokens)) = 4.0.0
-Provides: bundled(npm(language-map)) = 1.5.0
-Provides: bundled(npm(lodash)) = 4.17.21
-Provides: bundled(npm(loose-envify)) = 1.4.0
-Provides: bundled(npm(mime-db)) = 1.54.0
-Provides: bundled(npm(object-assign)) = 4.1.1
+Provides: bundled(npm(lodash)) = 4.17.23
 Provides: bundled(npm(prop-types)) = 15.8.1
-Provides: bundled(npm(react-dom)) = 18.3.1
-Provides: bundled(npm(react-dropzone)) = 14.3.8
-Provides: bundled(npm(react-is)) = 16.13.1
 Provides: bundled(npm(react)) = 18.3.1
+Provides: bundled(npm(react-dom)) = 18.3.1
 Provides: bundled(npm(scheduler)) = 0.23.2
-Provides: bundled(npm(tabbable)) = 6.2.0
+Provides: bundled(npm(tabbable)) = 6.4.0
 Provides: bundled(npm(throttle-debounce)) = 5.0.2
 Provides: bundled(npm(tslib)) = 2.8.1
 
@@ -51,9 +53,19 @@ A filesystem browser for Cockpit
 
 %prep
 %setup -q -n %{name}
+%if %{defined rebuild_bundle}
+%setup -q -D -T -a 1 -n %{name}
+%endif
 
 %build
-# Nothing to build
+%if %{defined rebuild_bundle}
+rm -rf dist
+# HACK: node module packaging is broken in Fedora ≤ 43; should be in
+# common location, not major version specific one
+NODE_ENV=production NODE_PATH=/usr/lib/node_modules:$(echo /usr/lib/node_modules_*) ./build.js
+%else
+# Use pre-built bundle on distributions without nodejs-esbuild
+%endif
 
 %install
 %make_install PREFIX=/usr
@@ -74,6 +86,58 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*
 %{_datadir}/metainfo/*
 
 %changelog
+* Wed Feb 11 2026 Packit <hello@packit.dev> - 36-1
+- Convert license headers to SPDX format
+
+
+* Wed Jan 28 2026 Packit <hello@packit.dev> - 35-1
+- Packaging fixes and translation updates
+
+
+* Fri Jan 16 2026 Fedora Release Engineering <releng@fedoraproject.org> - 34-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_44_Mass_Rebuild
+
+* Fri Jan 16 2026 Fedora Release Engineering <releng@fedoraproject.org> - 34-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_44_Mass_Rebuild
+
+* Wed Dec 10 2025 Packit <hello@packit.dev> - 34-1
+- Bug fixes and translation updates
+
+
+* Thu Nov 27 2025 Packit <hello@packit.dev> - 33-1
+- Bug fixes and translation updates
+
+
+* Wed Nov 12 2025 Packit <hello@packit.dev> - 32-1
+- Performance and stability improvements
+
+
+* Fri Oct 31 2025 Packit <hello@packit.dev> - 31.1-1
+- don't initialise a git repo in gating tests (fixes fedora gating)
+
+
+* Wed Oct 15 2025 Packit <hello@packit.dev> - 30-1
+- Translations and dependency updates
+
+* Thu Oct 2 2025 Packit <hello@packit.dev> - 29-1
+- Bug fixes and translation updates
+
+* Wed Sep 3 2025 Packit <hello@packit.dev> - 28-1
+- Allow user to create empty files
+- Bug fixes and translation updates
+
+* Wed Aug 20 2025 Packit <hello@packit.dev> - 27-1
+- Translation and dependency updates
+
+* Wed Aug 6 2025 Packit <hello@packit.dev> - 26-1
+Bug fixes and translation updates
+
+* Wed Jul 23 2025 Fedora Release Engineering <releng@fedoraproject.org> - 25-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_43_Mass_Rebuild
+
+* Wed Jul 23 2025 Packit <hello@packit.dev> - 25-1
+- Bug fixes and translation updates
+
 * Wed Jul 9 2025 Packit <hello@packit.dev> - 24-1
 - Bug fixes and translation updates
 
