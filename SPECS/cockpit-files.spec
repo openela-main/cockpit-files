@@ -1,5 +1,5 @@
 Name: cockpit-files
-Version: 36
+Version: 36.1
 Release: 1%{?dist}
 Summary: A filesystem browser for Cockpit
 License: LGPL-2.1-or-later
@@ -86,6 +86,10 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*
 %{_datadir}/metainfo/*
 
 %changelog
+* Tue Sep 22 2026 Jelle van der Waa <jvanderw@redhat.com> - 36.1-1
+- CVE-2026-91202 - Don't de-reference a symlink when creating a directory (RHEL-263134)
+- CVE-2026-91205 - Don't de-reference a symlink when creating a directory (RHEL-263141)
+
 * Wed Feb 11 2026 Packit <hello@packit.dev> - 36-1
 - Convert license headers to SPDX format
 
