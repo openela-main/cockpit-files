@@ -1,5 +1,5 @@
 Name: cockpit-files
-Version: 36.1
+Version: 43
 Release: 1%{?dist}
 Summary: A filesystem browser for Cockpit
 License: LGPL-2.1-or-later
@@ -31,20 +31,19 @@ Requires: cockpit-bridge >= 318
 # Replace the older cockpit-navigator provided by 45Drives
 Obsoletes: cockpit-navigator < 0.5.11
 
-Provides: bundled(npm(@patternfly/patternfly)) = 6.4.0
-Provides: bundled(npm(@patternfly/react-core)) = 6.4.1
-Provides: bundled(npm(@patternfly/react-icons)) = 6.4.0
-Provides: bundled(npm(@patternfly/react-styles)) = 6.4.0
-Provides: bundled(npm(@patternfly/react-table)) = 6.4.1
-Provides: bundled(npm(@patternfly/react-tokens)) = 6.4.0
+Provides: bundled(npm(@patternfly/patternfly)) = 6.6.0
+Provides: bundled(npm(@patternfly/react-core)) = 6.6.0
+Provides: bundled(npm(@patternfly/react-icons)) = 6.6.0
+Provides: bundled(npm(@patternfly/react-styles)) = 6.6.0
+Provides: bundled(npm(@patternfly/react-table)) = 6.6.0
+Provides: bundled(npm(@patternfly/react-tokens)) = 6.6.0
 Provides: bundled(npm(dequal)) = 2.0.3
-Provides: bundled(npm(focus-trap)) = 7.6.4
-Provides: bundled(npm(lodash)) = 4.17.23
-Provides: bundled(npm(prop-types)) = 15.8.1
+Provides: bundled(npm(focus-trap)) = 7.6.6
+Provides: bundled(npm(lodash)) = 4.18.1
 Provides: bundled(npm(react)) = 18.3.1
 Provides: bundled(npm(react-dom)) = 18.3.1
 Provides: bundled(npm(scheduler)) = 0.23.2
-Provides: bundled(npm(tabbable)) = 6.4.0
+Provides: bundled(npm(tabbable)) = 6.5.0
 Provides: bundled(npm(throttle-debounce)) = 5.0.2
 Provides: bundled(npm(tslib)) = 2.8.1
 
@@ -86,9 +85,34 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*
 %{_datadir}/metainfo/*
 
 %changelog
-* Tue Sep 22 2026 Jelle van der Waa <jvanderw@redhat.com> - 36.1-1
-- CVE-2026-91202 - Don't de-reference a symlink when creating a directory (RHEL-263134)
-- CVE-2026-91205 - Don't de-reference a symlink when creating a directory (RHEL-263141)
+* Thu Jul 30 2026 Packit <hello@packit.dev> - 43-1
+- Translations and dependency updates
+
+* Wed Jul 15 2026 Fedora Release Engineering <releng@fedoraproject.org> - 42-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_45_Mass_Rebuild
+
+* Tue Jun 23 2026 Packit <hello@packit.dev> - 42-1
+- Bug fixes and translation updates
+
+* Thu Jun 4 2026 Packit <hello@packit.dev> - 41-1
+- Add editor shortcut for “Save”
+- Dependency updates
+
+* Tue Apr 21 2026 Packit <hello@packit.dev> - 40-1
+- Dependency updates
+
+* Wed Mar 25 2026 Packit <hello@packit.dev> - 39-1
+- Bugfixes and translation updates
+
+
+* Wed Mar 18 2026 Packit <hello@packit.dev> - 38-1
+- Add discard changes dialog
+- Bugfixes and translation updates
+
+
+* Thu Feb 26 2026 Packit <hello@packit.dev> - 37-1
+- Bug fixes and translation updates
+
 
 * Wed Feb 11 2026 Packit <hello@packit.dev> - 36-1
 - Convert license headers to SPDX format
